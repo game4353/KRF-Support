@@ -1,0 +1,5 @@
+<div [ngSwitch]="fid" class="outer">
+  <div *ngSwitchCase="-1" class="nofruit"></div>
+  <div *ngSwitchCase="undefined" class="nofruit locked"></div>
+  <app-icon *ngSwitchDefault [id]="fid" type="fruit"></app-icon>
+</div>

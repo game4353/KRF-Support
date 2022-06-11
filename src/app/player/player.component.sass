@@ -1,0 +1,50 @@
+.outer
+  width: fit-content
+  margin: 2px 2px 18px 2px
+  display: flex
+  flex-direction: row
+  @media only screen and (max-width: 870px)
+    flex-direction: column
+    width: 620px
+
+.playerInfo-tall
+  width: 220px
+  margin: 2px
+  @media only screen and (max-width: 870px)
+    display: none
+
+.playerInfo-wide
+  width: 100%
+  margin: 2px
+  display: none
+  @media only screen and (max-width: 870px)
+    display: flex
+
+
+
+.characters
+  max-width: 1240px
+.comment
+  border: black 1px solid
+  border-radius: 15px
+  width: 212px
+  font-size: 14px
+  padding: 3px
+  height: 40px
+  margin-top: 2px
+.timestamp
+  font-size: 14px
+div.code
+  font-family: monospace, monospace
+
+
+.canClick:hover
+  cursor: pointer
+  animation-name: onhover
+  animation-duration: 1s
+  animation-fill-mode: forwards
+@keyframes onhover
+  from 
+    background-color: #fff
+  to
+    background-color: #ffddff88

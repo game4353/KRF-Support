@@ -1,0 +1,48 @@
+<div *ngIf="info" class="border outer">
+  <div class="flex-E playerInfo-tall canClick" (click)="searchCode(info.myCode)">
+    <div style="margin: 0px 5px">
+      <app-icon [id]="info.currentAchievementId" type="title"></app-icon>
+    </div>
+    <div class="flex-M">
+      <app-character [chara]="info.firstFavoriteMember" show="icon"></app-character>
+      <div class="flex-E" style="margin: 2px; font-size: 16px;">
+        <div class="jp">{{info.name}}</div>
+        <div>Rank. {{info.level}}</div>
+        <div class="code">{{info.myCode}}</div>
+      </div>
+    </div>
+    <div [innerText]="info.comment" class="jp comment"></div>
+    <br>
+    <div class="timestamp">Last login: {{timeDelta}} ago</div>
+  </div>
+
+  <div class="flex-M playerInfo-wide canClick" (click)="searchCode(info.myCode)">
+    <div class="flex-E">
+      <app-character [chara]="info.firstFavoriteMember" show="icon"></app-character>
+      <div style="font-size: 14px;">Rank. {{info.level}}</div>
+    </div>
+    <div class="flex-E" style="margin-left: 10px;">
+      <div class="flex-M" style="margin: 2px; font-size: 16px; justify-content: space-between;">
+        <div class="jp">{{info.name}}</div>
+        <div class="code">{{info.myCode}}</div>
+      </div>
+      <div [innerText]="info.comment" class="jp comment"></div>
+    </div>    
+    <div class="flex-E" style="margin: auto 10px auto auto;">
+      <div style="margin: 0px 5px">
+        <app-icon [id]="info.currentAchievementId" type="title"></app-icon>
+      </div>
+      <div class="timestamp" style="align-self: flex-end;">
+        Last login: {{timeDelta}} ago
+      </div>
+    </div>
+  </div>
+
+
+  <div class="flex-Z characters">
+    <app-character *ngFor="let chara of info.supportCharacters" 
+      [chara]="chara" (click)="searchChara(chara.characterId)"
+      class="canClick">
+    </app-character>
+  </div>
+</div>

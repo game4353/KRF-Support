@@ -1,0 +1,43 @@
+<div *ngIf="chara && show === 'icon'" style="width: 68px;">  
+  <app-icon [id]="chara.characterId" type="icon"></app-icon>
+</div>
+
+<div *ngIf="chara && show === 'all'" class="flex-M border">
+
+  <div class="flex-E">
+    <div class="flex-M">
+      <div class="flex-E">
+        <span *ngIf="chara.weaponId > -1" class="wlv">{{chara.weaponLevel}}</span>
+        <div style="width: 48px;">
+          <app-icon *ngIf="chara.weaponId > -1" 
+            [id]="chara.weaponId" type="wpn"></app-icon>
+        </div>
+      </div>
+      <div style="width: 68px;">
+        <app-icon [id]="chara.characterId" type="icon"></app-icon>
+      </div>
+    </div>
+    <div class="flex-M">
+      <div class="slv">{{ chara.weaponSkillLevel }}</div>
+      <div class="slv">{{ chara.skillLevel3 }}</div>
+      <div class="slv">{{ chara.skillLevel2 }}</div>
+      <div class="slv">
+        <app-icon tag="sp" type="skill" style="width: 100%;" [text]="chara.skillLevel1" [opacity]="0.6"></app-icon>
+      </div>
+    </div>
+  </div>
+  
+  <div class="flex-E">
+    <div style="text-align: center;">{{ chara.level }}</div>
+    <div>💖{{ chara.namedLevel }}</div>
+    <div>🌟{{ chara.arousalLevel }}</div>
+    <app-fruit [fid]="topFruit" style="margin-top: auto;"></app-fruit>
+  </div>
+
+  <div class="flex-Z fruits">
+    <app-fruit *ngFor="let f of basicFruits" 
+      [fid]="f" style="max-width: 20%;">
+    </app-fruit>
+  </div>
+  
+</div>

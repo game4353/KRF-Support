@@ -1,0 +1,10 @@
+<div class="outer">
+  <div *ngIf="bg" [style.background-image]="'url(' + bg + ')'" [style.opacity] = "opacity"></div>
+  <div class="main" [style.background-image]="'url(' + url + ')'" [style.opacity] = "opacity">
+    <img [src]="url">
+  </div>
+  <div *ngIf="frame" [style.background-image]="'url(' + frame + ')'" [style.opacity] = "opacity"></div>
+  <img [src]="url">
+
+  <div *ngIf="text" class="text">{{text}}</div>
+</div>
