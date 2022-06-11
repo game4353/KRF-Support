@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 })
 export class SupportComponent implements OnInit {
   players: {time: string, data: Player}[] = []
+  show: boolean[] = []
   updateTime?: Date
   constructor(
     private route: ActivatedRoute,
@@ -20,18 +21,19 @@ export class SupportComponent implements OnInit {
     this.dataService.getPlayersData().subscribe(arr => {
       if (arr.length === 0) return
       this.updateTime = new Date(`${arr[0].time}+09:00`)
+      this.players = arr
       this.route.params.subscribe(params => {
         const code = params['code']
         const cid = +params['character']
         //console.log('code', code, 'cid', cid)
-        if (code) this.players = arr.filter(obj => obj.data.myCode === code)
-        else if (cid) this.players = arr.filter(obj => {
+        if (code) this.show = arr.map(obj => obj.data.myCode === code)
+        else if (cid) this.show = arr.map(obj => {
           const cids = obj.data.supportCharacters.map(c => c.characterId)
           if (cids.includes(cid)) return true
           if (cid % 10 === 0 && cids.includes(cid+1)) return true
           return false
         })
-        else this.players = arr
+        else this.show = arr.map(_ => true)
       })
     })
   }

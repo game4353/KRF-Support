@@ -10,6 +10,7 @@ import { Player } from '../character';
 export class PlayerComponent implements OnInit {
   @Input() info?: Player
   @Input() updateTime?: Date
+  @Input() show: boolean = true
   loginTime?: Date
   timeDelta: string = ''
   constructor(

@@ -1,4 +1,4 @@
-<div *ngIf="info" class="border outer">
+<div *ngIf="info" class="border outer" [class.hidden]="!show">
   <div class="flex-E playerInfo-tall canClick" (click)="searchCode(info.myCode)">
     <div style="margin: 0px 5px">
       <app-icon [id]="info.currentAchievementId" type="title"></app-icon>
