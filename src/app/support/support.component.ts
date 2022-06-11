@@ -21,19 +21,19 @@ export class SupportComponent implements OnInit {
     this.dataService.getPlayersData().subscribe(arr => {
       if (arr.length === 0) return
       this.updateTime = new Date(`${arr[0].time}+09:00`)
-      this.players = arr
+      this.players = arr.sort((a, b) => +new Date(b.data.lastLoginAt) - +new Date(a.data.lastLoginAt))
       this.route.params.subscribe(params => {
         const code = params['code']
         const cid = +params['character']
         //console.log('code', code, 'cid', cid)
-        if (code) this.show = arr.map(obj => obj.data.myCode === code)
-        else if (cid) this.show = arr.map(obj => {
+        if (code) this.show = this.players.map(obj => obj.data.myCode === code)
+        else if (cid) this.show = this.players.map(obj => {
           const cids = obj.data.supportCharacters.map(c => c.characterId)
           if (cids.includes(cid)) return true
           if (cid % 10 === 0 && cids.includes(cid+1)) return true
           return false
         })
-        else this.show = arr.map(_ => true)
+        else this.show = this.players.map(_ => true)
       })
     })
   }
