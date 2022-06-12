@@ -22,7 +22,7 @@ export class DataService {
     return this.http.get<Data.SkillList[]>('assets/json/SkillList_PL.json')
   }*/
   getSkillIcon (type: number|'sp'|'auto'|'tree'|'orb'|'blank', isEv4 = false) {
-    return '/assets/icon/' + 
+    return 'assets/icon/' + 
     (() => {
       if (type === 'sp') return 'CMD_SkillSP'
       if (type === 'auto') return 'CMD_SkillPassive'
