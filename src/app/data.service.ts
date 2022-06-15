@@ -11,8 +11,11 @@ import { Data, Player } from './character';
 export class DataService {
   HOST = 'https://gitlab.com/kirafan/database/-/raw/master/database/'
   GS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR0OTf1vSjxvHImFRffN-9FMDrlqceqMrm6JiOI8MUI_4X9d7guccGIGu2xdJTW0Sdi52hBYZNKegwa/pubhtml#'
-  weaponData?: {[wid: number]: Data.Weapon}
-  playerCache?: {time: string, data: Player}[]
+  // new GS
+  GS2 = 'https://script.google.com/macros/s/AKfycbxae_EaFLOREka12odRISX9DyaEGRU5qPwq6tD4KkcYXAJS-ojcsHbPQPhVbgsxYZsRpw/exec'
+  weaponData?: { [wid: number]: Data.Weapon }
+  playerCache?: { time: string, data: Player }[]
+  timePlayersCache?: { timestamp: string, players: Player[] }
 
   constructor(
     private http: HttpClient,
@@ -76,8 +79,26 @@ export class DataService {
     })
     */
   }
+  getTimeAndPlayers () {
+    if (this.timePlayersCache) return of(this.timePlayersCache)
+    return this.http.get<string[][]>(`${this.GS2}?support=true`).pipe(
+      map(arr => {
+        const timestamp = arr.shift()![1]
+        const players = <Player[]>arr.map(row => JSON.parse(row[1]))
+        return this.timePlayersCache = { timestamp, players}
+      })
+    )
+  }
   getPlayersData () : Observable<{time: string, data: Player}[]>{
     if (this.playerCache) return of(this.playerCache)
+    return this.http.get<string[][]>(`${this.GS2}?support=true`).pipe(
+      map(arr => {
+        const timestamp = arr.shift()![1]
+        return this.playerCache = arr.map(row => ({ time: timestamp, data: JSON.parse(row[1]) }))
+      })
+    )
+
+    // old below
     return this.http.get(this.GS, { responseType: 'text' }).pipe(
       map(htmlString => {
         const domParser = new DOMParser()
