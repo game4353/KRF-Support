@@ -1,0 +1,43 @@
+.outer
+ display: flex
+ flex-direction: column
+ width: 100%
+ height: 100%
+ justify-content: center
+ align-items: center
+
+.img
+  animation-name: loading_img
+  animation-duration: 1s
+  animation-iteration-count: infinite
+  width: 60px
+  height: 100px
+  background-size: contain
+  background-repeat: no-repeat
+
+@keyframes loading_img
+  0%, 100%
+    background-image: url('/assets/loading/1.png')
+
+  50%
+    background-image: url('/assets/loading/2.png')
+
+.text
+  width: 100px
+  height: 20px
+
+.text::after
+  content: '...'
+  animation-name: loading_text
+  animation-duration: 1s
+  animation-iteration-count: infinite
+
+@keyframes loading_text
+  0%, 100%
+    content: "Loading."
+
+  33%
+    content: "Loading.."
+
+  67%
+    content: "Loading..."
