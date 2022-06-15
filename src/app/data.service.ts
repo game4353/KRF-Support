@@ -12,7 +12,7 @@ export class DataService {
   HOST = 'https://gitlab.com/kirafan/database/-/raw/master/database/'
   GS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR0OTf1vSjxvHImFRffN-9FMDrlqceqMrm6JiOI8MUI_4X9d7guccGIGu2xdJTW0Sdi52hBYZNKegwa/pubhtml#'
   // new GS
-  GS2 = 'https://script.google.com/macros/s/AKfycbxae_EaFLOREka12odRISX9DyaEGRU5qPwq6tD4KkcYXAJS-ojcsHbPQPhVbgsxYZsRpw/exec'
+  GS2 = 'https://script.google.com/macros/s/AKfycbzr86Kd6pU7TLYd9RL5M-Ch7Azatkc1E9koju_SVTHJVanJMEiZsyRSrlk91swI30Ar-g/exec'
   weaponData?: { [wid: number]: Data.Weapon }
   playerCache?: { time: string, data: Player }[]
   timePlayersCache?: { timestamp: string, players: Player[] }

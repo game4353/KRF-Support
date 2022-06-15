@@ -33,6 +33,11 @@
             "styles": [
               "src/styles.sass"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/style"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -101,6 +106,11 @@
             "styles": [
               "src/styles.sass"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/style"
+              ]
+            },
             "scripts": []
           }
         },

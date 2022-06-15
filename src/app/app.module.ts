@@ -12,6 +12,7 @@ import { PlayerComponent } from './player/player.component';
 import { WeaponComponent } from './weapon/weapon.component';
 import { FruitComponent } from './fruit/fruit.component';
 import { SupportComponent } from './support/support.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SupportComponent } from './support/support.component';
     PlayerComponent,
     WeaponComponent,
     FruitComponent,
-    SupportComponent
+    SupportComponent,
+    LoadingComponent
   ],
   imports: [
     HttpClientModule,
