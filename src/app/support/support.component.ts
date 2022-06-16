@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Player } from '../character';
 import { DataService } from '../data.service';
@@ -19,9 +19,9 @@ export class SupportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getTimeAndPlayers().subscribe(obj => {
-      this.updateTime = new Date(`${obj.timestamp} GMT+9`)
-      this.players = obj.players.sort((a, b) => +new Date(b.lastLoginAt) - +new Date(a.lastLoginAt))
+    this.dataService.getTimeAndPlayers().subscribe(players => {
+      this.updateTime = this.dataService.getUpdateTime()
+      this.players = players.sort((a, b) => +new Date(b.lastLoginAt) - +new Date(a.lastLoginAt))
       /*this.route.params.subscribe(params => {
         this.loaded = false
         const code = params['code']

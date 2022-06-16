@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "ghp": "ng deploy --base-href=/KRF-Support/"
+    "deploy": "ng deploy --base-href=/KRF-Support/",
+    "serve": "ng serve -o"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "@angular-devkit/build-angular": "~13.3.5",
     "@angular/cli": "~13.3.5",
     "@angular/compiler-cli": "~13.3.0",
+    "@angular/localize": "^13.3.11",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "angular-cli-ghpages": "^1.0.0",

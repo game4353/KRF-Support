@@ -5,25 +5,25 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Data, Player } from './character';
 
+const DB = 'https://gitlab.com/kirafan/database/-/raw/master/database/'
+const GS = 'https://script.google.com/macros/s/AKfycbxfDBznp5K-_b9dBVio3hK-udXlRTkzAkUH4UAgIK3EazbXs1fnI649Xk49gOIKdpHnqQ/exec'
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  HOST = 'https://gitlab.com/kirafan/database/-/raw/master/database/'
-  GS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR0OTf1vSjxvHImFRffN-9FMDrlqceqMrm6JiOI8MUI_4X9d7guccGIGu2xdJTW0Sdi52hBYZNKegwa/pubhtml#'
-  // new GS
-  GS2 = 'https://script.google.com/macros/s/AKfycbzr86Kd6pU7TLYd9RL5M-Ch7Azatkc1E9koju_SVTHJVanJMEiZsyRSrlk91swI30Ar-g/exec'
   weaponData?: { [wid: number]: Data.Weapon }
   playerCache?: { time: string, data: Player }[]
   timePlayersCache?: { timestamp: string, players: Player[] }
+  cache: {
+    time?: Date,
+    players?: Player[]
+  } = {}
 
   constructor(
     private http: HttpClient,
     private messageService: MessageService
   ) { }
-  /*getSkillData () {
-    return this.http.get<Data.SkillList[]>('assets/json/SkillList_PL.json')
-  }*/
   getSkillIcon (type: number|'sp'|'auto'|'tree'|'orb'|'blank', isEv4 = false) {
     return 'assets/icon/' + 
     (() => {
@@ -68,55 +68,18 @@ export class DataService {
   }
   getWeaponIcon (aid: number): string {
     return `https://texture-asset.kirafan.cn/weaponicon/weaponicon_wpn_${aid}.png`
-    /*
-    return new Promise((res, rej) => {
-      if (!wid) return res(this.DEFAULT)
-      this.getWeaponData().subscribe(dict => {
-        if (!dict[wid]) return this.error('Invalid weapon ID.')
-        const aid = dict[wid].m_ResourceID_R
-        res(`https://texture-asset.kirafan.cn/weaponicon/weaponicon_wpn_${aid}.png`)
-      })
-    })
-    */
+  }
+  getUpdateTime () {
+    return this.cache.time
   }
   getTimeAndPlayers () {
-    if (this.timePlayersCache) return of(this.timePlayersCache)
-    return this.http.get<string[][]>(`${this.GS2}?support=true`).pipe(
+    if (this.cache.players) return of(this.cache.players)
+    return this.http.get<string[][]>(`${GS}?support=true`).pipe(
       map(arr => {
         const timestamp = arr.shift()![1]
+        this.cache.time = new Date(`${timestamp} GMT+9`)
         const players = <Player[]>arr.map(row => JSON.parse(row[1]))
-        return this.timePlayersCache = { timestamp, players}
-      })
-    )
-  }
-  getPlayersData () : Observable<{time: string, data: Player}[]>{
-    if (this.playerCache) return of(this.playerCache)
-    return this.http.get<string[][]>(`${this.GS2}?support=true`).pipe(
-      map(arr => {
-        const timestamp = arr.shift()![1]
-        return this.playerCache = arr.map(row => ({ time: timestamp, data: JSON.parse(row[1]) }))
-      })
-    )
-
-    // old below
-    return this.http.get(this.GS, { responseType: 'text' }).pipe(
-      map(htmlString => {
-        const domParser = new DOMParser()
-        const htmlElement = domParser.parseFromString(htmlString, 'text/html')
-        const sheets = htmlElement.getElementById(`sheets-viewport`)
-        const trs = sheets!.lastElementChild!.getElementsByTagName('tr')
-        const players = []
-        for (let tr of Array.from(trs)) {
-          const tds = tr.getElementsByTagName('td')
-          if (!tds[0] || !tds[0].innerText) continue
-          const player = {
-            time: tds[1].innerText,
-            data: JSON.parse(tds[2].innerText)
-          }
-          players.push(player)
-        }
-        this.playerCache = players
-        return players
+        return this.cache.players = players
       })
     )
   }
