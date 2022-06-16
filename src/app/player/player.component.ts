@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from '../character';
+import { DataService } from '../data.service'
 
 @Component({
   selector: 'app-player',
@@ -9,26 +10,19 @@ import { Player } from '../character';
 })
 export class PlayerComponent implements OnInit {
   @Input() info?: Player
-  @Input() updateTime?: Date
   show: boolean = true
-  loginTime?: Date
   timeDelta: string = ''
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
-    if (this.info) {
-      this.loginTime = new Date(`${this.info.lastLoginAt}+09:00`)
-      if (this.updateTime) {
-        this.timeDelta = this.ms2unit(+this.updateTime - +this.loginTime)
-      }
-    }
+    // filter from url
     this.route.params.subscribe(params => {
       const code = params['code']
       const cid = +params['character']
-      //console.log('code', code, 'cid', cid)
       if (!this.info) return
       if (code) this.show = this.info.myCode === code
       else if (cid) {
@@ -40,9 +34,13 @@ export class PlayerComponent implements OnInit {
       else this.show = true
     })
     
-
+    if (!this.info) return
+    const updateTime = this.dataService.getUpdateTime()
+    const loginTime = new Date(`${this.info.lastLoginAt}+09:00`)
+    if (updateTime) this.timeDelta = this.timeDiff(loginTime, updateTime)
   }
-  ms2unit (ms: number) {
+  timeDiff (before: Date, after: Date) {
+    let ms = +after - +before
     ms = Math.floor(ms / 1000)
     if (ms < 60) return `${ms} secs`
     ms = Math.floor(ms / 60)

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './router-strategy';
+import { CookieService } from 'ngx-cookie-service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +13,6 @@ import { CharacterComponent } from './character/character.component';
 import { IconComponent } from './icon/icon.component';
 import { MessagesComponent } from './messages/messages.component';
 import { PlayerComponent } from './player/player.component';
-import { WeaponComponent } from './weapon/weapon.component';
 import { FruitComponent } from './fruit/fruit.component';
 import { SupportComponent } from './support/support.component';
 import { LoadingComponent } from './loading/loading.component';
@@ -23,7 +24,6 @@ import { LoadingComponent } from './loading/loading.component';
     IconComponent,
     MessagesComponent,
     PlayerComponent,
-    WeaponComponent,
     FruitComponent,
     SupportComponent,
     LoadingComponent
@@ -32,12 +32,16 @@ import { LoadingComponent } from './loading/loading.component';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
-  providers: [{
-    provide: RouteReuseStrategy,
-    useClass: CustomRouteReuseStrategy
-  }],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomRouteReuseStrategy
+    }, 
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

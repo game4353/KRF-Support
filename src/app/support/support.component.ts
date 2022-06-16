@@ -1,5 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service'
 import { Player } from '../character';
 import { DataService } from '../data.service';
 
@@ -15,10 +16,18 @@ export class SupportComponent implements OnInit {
   loaded = false
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit(): void {
+    /*
+    let cookie = 0
+    if (this.cookieService.check('test')) cookie = +this.cookieService.get('test') + 1
+    this.cookieService.set('test', String(cookie))
+    console.log('cookie: ', cookie)
+    */
+
     this.dataService.getTimeAndPlayers().subscribe(players => {
       this.updateTime = this.dataService.getUpdateTime()
       this.players = players.sort((a, b) => +new Date(b.lastLoginAt) - +new Date(a.lastLoginAt))

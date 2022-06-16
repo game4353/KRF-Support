@@ -1,10 +1,7 @@
 <ng-container *ngIf="loaded; else loading">
   <div class="timestamp">Last update: {{updateTime}}</div>
-  <ng-container *ngFor="let player of players; let i = index">
-    <app-player [info]="player" [updateTime]="updateTime"></app-player>
-  </ng-container>
+  <app-player *ngFor="let player of players" [info]="player"></app-player>
 </ng-container>
-
 
 <ng-template #loading>
   <app-loading></app-loading>
