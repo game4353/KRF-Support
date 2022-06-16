@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from '../character';
 
 @Component({
@@ -10,11 +10,12 @@ import { Player } from '../character';
 export class PlayerComponent implements OnInit {
   @Input() info?: Player
   @Input() updateTime?: Date
-  @Input() show: boolean = true
+  show: boolean = true
   loginTime?: Date
   timeDelta: string = ''
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +25,22 @@ export class PlayerComponent implements OnInit {
         this.timeDelta = this.ms2unit(+this.updateTime - +this.loginTime)
       }
     }
+    this.route.params.subscribe(params => {
+      const code = params['code']
+      const cid = +params['character']
+      //console.log('code', code, 'cid', cid)
+      if (!this.info) return
+      if (code) this.show = this.info.myCode === code
+      else if (cid) {
+        const cids = this.info.supportCharacters.map(c => c.characterId)
+        if (cids.includes(cid)) this.show = true
+        else if (cid % 10 === 0 && cids.includes(cid+1)) this.show = true
+        else this.show = false
+      }
+      else this.show = true
+    })
+    
+
   }
   ms2unit (ms: number) {
     ms = Math.floor(ms / 1000)

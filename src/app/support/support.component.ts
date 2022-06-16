@@ -22,7 +22,7 @@ export class SupportComponent implements OnInit {
     this.dataService.getTimeAndPlayers().subscribe(obj => {
       this.updateTime = new Date(`${obj.timestamp} GMT+9`)
       this.players = obj.players.sort((a, b) => +new Date(b.lastLoginAt) - +new Date(a.lastLoginAt))
-      this.route.params.subscribe(params => {
+      /*this.route.params.subscribe(params => {
         this.loaded = false
         const code = params['code']
         const cid = +params['character']
@@ -35,8 +35,9 @@ export class SupportComponent implements OnInit {
           return false
         })
         else this.show = this.players.map(_ => true)
-        this.loaded = true
-      })
+        
+      })*/
+      this.loaded = true
     })
   }
 
