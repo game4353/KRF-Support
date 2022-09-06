@@ -1,0 +1,28 @@
+<div class="content" (click)="nothing($event)">
+  <div>
+    <ul>
+      <h2><li>Register</li></h2>
+      Send a friend request to 'NYCJCMHXV6' and then <fa-icon [icon]="faRotateRight"></fa-icon>.
+      <br>(The request will be canceled.)<br>
+      <a href="assets/help/register.png">
+        <img src="assets/help/register.png">
+      </a>
+      <h2><li>Share</li></h2>
+      <span *ngTemplateOutlet="Tap"></span> your info and share the link.
+      <h2><li>Search</li></h2>
+      <span *ngTemplateOutlet="Tap"></span> any character.
+      <h2><li>Home</li></h2>
+      <span *ngTemplateOutlet="Tap"></span> the title.
+    </ul>
+  </div>
+</div>
+
+<ng-template #tap>
+  <span class="hidden_pc">tap</span>
+  <span class="hidden_mobile">click</span>
+</ng-template>
+
+<ng-template #Tap>
+  <span class="hidden_pc">Tap</span>
+  <span class="hidden_mobile">Click</span>
+</ng-template>
