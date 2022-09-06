@@ -1,0 +1,12 @@
+{
+  "firebaseConfig": {
+    "apiKey": "AIzaSyAGvGAYEtcbll8qjd_c6uXeamVljnWXMKI",
+    "authDomain": "kirara-calc4353.firebaseapp.com",
+    "databaseURL": "https://kirara-calc4353.firebaseio.com",
+    "projectId": "kirara-calc4353",
+    "storageBucket": "kirara-calc4353.appspot.com",
+    "messagingSenderId": "312253860465",
+    "appId": "1:312253860465:web:22ae5da437f01995e169d0"
+  },
+  "refPath": "/_guest"
+}
