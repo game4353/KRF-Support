@@ -3,20 +3,16 @@
     <img class="logo" src="assets/favicon/favicon.ico">
   </a>
   <div class="jp title">
-    <a routerLink="/all">
-      {{ title }}
-    </a>
+    <a routerLink="/all">きらファン　サポート</a>
   </div>
-  <span style="font-family: monospace;">
-    Share your support by sending a friend request to 'NYCJCMHXV6'.
-  </span>
-  <div class="tools flex-M">
-    <fa-icon [icon]="faRotateRight"></fa-icon>
-    <fa-icon [icon]="faCircleQuestion"></fa-icon>
-    <fa-icon [icon]="faGear"></fa-icon>
+  <div class="tools flex-M flex-C">
+    <fa-icon class="btn" [icon]="faRotateRight" (click)="refresh()"></fa-icon>
+    <fa-icon class="switch" [class.on]="help" [icon]="faCircleQuestion" (click)="toggleHelp()"></fa-icon>
+    <fa-icon class="btn hidden" [icon]="faGear"></fa-icon>
   </div>
 </header>
-<section>
+<app-help class="popup flex-C" [class.hidden]="!help" (click)="toggleHelp()"></app-help>
+<section [class.blur]="help">
   <router-outlet></router-outlet>
 </section>
 <!--app-messages></app-messages-->

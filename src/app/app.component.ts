@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { faCircleQuestion, faGear, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-root',
@@ -6,8 +6,18 @@ import { faCircleQuestion, faGear, faRotateRight } from '@fortawesome/free-solid
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'きらファン　サポート'
+  @HostBinding('class') get class() {
+    return (/Mobi|Android/i.test(navigator.userAgent))? 'mobile': 'pc'
+  }
   faRotateRight = faRotateRight
   faCircleQuestion = faCircleQuestion
   faGear = faGear
+  help = false
+
+  refresh () {
+    location.reload()
+  }
+  toggleHelp () {
+    this.help = !this.help
+  }
 }

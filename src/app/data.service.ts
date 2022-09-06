@@ -4,26 +4,26 @@ import { MessageService } from './message.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Data, Player } from './character';
-
-const DB = 'https://gitlab.com/kirafan/database/-/raw/master/database/'
-const GS = 'https://script.google.com/macros/s/AKfycbxfDBznp5K-_b9dBVio3hK-udXlRTkzAkUH4UAgIK3EazbXs1fnI649Xk49gOIKdpHnqQ/exec'
+import { OutsourceService } from './outsource.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  weaponData?: { [wid: number]: Data.Weapon }
-  playerCache?: { time: string, data: Player }[]
-  timePlayersCache?: { timestamp: string, players: Player[] }
   cache: {
-    time?: Date,
+    updateTime?: Date,
     players?: Player[]
   } = {}
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private outsource: OutsourceService
   ) { }
+  getSpIcon () {
+    return 'assets/icon/CMD_SkillSP.png'
+  }
+  /*
   getSkillIcon (type: number|'sp'|'auto'|'tree'|'orb'|'blank', isEv4 = false) {
     return 'assets/icon/' + 
     (() => {
@@ -57,30 +57,27 @@ export class DataService {
       }
     })() + '.png'
   }
+  */
   getTitleIcon (aid: number) {
-    return `https://asset.kirafan.cn/texture/achievement/achievement_${aid}.png`
+    return this.outsource.fetchTitleIcon(aid)
   }
   getFruitIcon (aid: number) {
-    return `https://asset.kirafan.cn/texture/itemicon/itemicon_${aid}.png`
+    return this.outsource.fetchFruitIcon(aid)
   }
   getCharaIconFull (aid: number) {
-    return `https://mergedcharaicon-asset.kirafan.cn/charaicon_${aid}.png`
+    return this.outsource.fetchCharaIconFull(aid)
   }
-  getWeaponIcon (aid: number): string {
-    return `https://texture-asset.kirafan.cn/weaponicon/weaponicon_wpn_${aid}.png`
+  getWeaponIcon (aid: number) {
+    return this.outsource.fetchWeaponIcon(aid)
   }
   getUpdateTime () {
-    return this.cache.time
+    return this.cache.updateTime
   }
   getTimeAndPlayers () {
     if (this.cache.players) return of(this.cache.players)
-    return this.http.get<string[][]>(`${GS}?support=true`).pipe(
-      map(arr => {
-        const timestamp = arr.shift()![1]
-        this.cache.time = new Date(`${timestamp} GMT+9`)
-        const players = <Player[]>arr.map(row => JSON.parse(row[1]))
-        return this.cache.players = players
-      })
+    return this.outsource.fetchSupport().pipe(
+      tap(obj => this.cache = obj),
+      map(obj => obj.players)
     )
   }
   /*getWeaponData () {
@@ -96,6 +93,7 @@ export class DataService {
         catchError(this.handleError<Data.Weapon[]>('getWeaponData', []))
       )
   }*/
+  /*
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   
@@ -113,6 +111,6 @@ export class DataService {
     this.messageService.add(`HeroService: ${message}`);
   }
   private error (message: string) {
-
   }
+  */
 }

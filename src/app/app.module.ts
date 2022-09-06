@@ -16,6 +16,7 @@ import { PlayerComponent } from './player/player.component';
 import { FruitComponent } from './fruit/fruit.component';
 import { SupportComponent } from './support/support.component';
 import { LoadingComponent } from './loading/loading.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoadingComponent } from './loading/loading.component';
     PlayerComponent,
     FruitComponent,
     SupportComponent,
-    LoadingComponent
+    LoadingComponent,
+    HelpComponent
   ],
   imports: [
     HttpClientModule,

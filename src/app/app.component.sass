@@ -11,19 +11,41 @@ header
   position: fixed
   overflow: hidden
   background-color: wheat
-a
-  display: contents
-.logo
-  height: 100%
-.title
-  color: #369
-  font-size: calc($header-height * 0.5)
-  flex-shrink: 0
-  margin: 0px 8px
-  text-decoration: underline
+  a
+    display: contents
+  .logo
+    height: 100%
+  .title
+    color: #369
+    font-size: calc($header-height * 0.5)
+    flex-shrink: 0
+    margin: 0px 8px
+    text-decoration: underline
+  .tools
+    font-size: calc($header-height * 0.45)
+    margin-left: auto
+    margin-right: calc($header-height * 0.275)
+    gap: calc($header-height * 0.275)
+    .btn, .switch
+      cursor: pointer
+    .btn:active, .switch.on
+      filter: invert(1)
+
+.popup
+  position: fixed
+  z-index: 4
+  top: 54px
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: #808080cc
+  cursor: pointer
+
 section
   height: calc(100% - $header-height)
   padding-top: calc($header-height + 5px)
   margin: 5px
+section.blur
+    filter: blur(3px)
 span
   align-self: flex-end
